@@ -1,0 +1,21 @@
+{
+  "name": "pepeio_gamev1",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "host": "vite --host"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.98.2",
+    "phaser": "^3.90.0"
+  }
+}

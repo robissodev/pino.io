@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pino.io</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="/pfp/generator.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>PINO.IO</h1>
+    <p class="tagline">💊 Enter the Chain. Burn to Survive.</p>
+    <button id="connectWalletBtn">Connect Wallet</button>
+    <p id="walletAddress"></p>
+  </header>
+
+  <main>
+    <section id="swap">
+      <h2>💱 Buy $PINO on PINO.SWAP</h2>
+      <iframe src="https://jup.ag/swap/SOL-PINO" width="100%" height="500px" style="border: none;"></iframe>
+    </section>
+
+    <section id="pfp" class="pfp-panel">
+      <h2>GET YOUR PFP HERE!</h2>
+      <div class="container">
+       
+        
+        <div class="avatar-display" id="avatar-display">
+          <img id="avatar-image" src="/pfp-images/default_pino.png" alt="Avatar">
+        </div>
+        
+        <div class="buttons-container" id="buttons-container">
+          <button id="generate-btn">PINOMIZE</button>
+          <button id="default-btn">RESET</button>
+          <button id="download-btn">DOWNLOAD</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="game">
+      <h2>🎮 Enter the Arena</h2>
+      <button id="fullscreen-game" class="button">🖥️ Fullscreen</button>
+      <div id="phaser-game"></div>
+    </section>
+
+    <section id="soon1" class="coming-soon">
+      <div class="blur-overlay"><h2>🔒 Coming Soon</h2></div>
+    </section>
+    <section id="soon2" class="coming-soon">
+      <div class="blur-overlay"><h2>🔒 Coming Soon</h2></div>
+    </section>
+    <section id="soon3" class="coming-soon">
+      <div class="blur-overlay"><h2>🔒 Coming Soon</h2></div>
+    </section>
+    <section id="soon4" class="coming-soon">
+      <div class="blur-overlay"><h2>🔒 Coming Soon</h2></div>
+    </section>
+    <section id="soon5" class="coming-soon">
+      <div class="blur-overlay"><h2>🔒 Coming Soon</h2></div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script type="module" src="/pfp/generator.js"></script>
+  <script type="module" src="/solana/wallet.js"></script>
+  <script type="module" src="/main.js"></script>
+  <script>
+  const fullscreenBtn = document.getElementById('fullscreen-game');
+  const gamePanel = document.getElementById('phaser-game');
+
+  fullscreenBtn.addEventListener('click', () => {
+    const overlay = document.createElement('div');
+    overlay.className = 'fullscreen-overlay';
+
+    const content = document.createElement('div');
+    content.className = 'fullscreen-content';
+
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '✖';
+    closeBtn.className = 'fullscreen-close';
+    closeBtn.onclick = () => {
+      document.body.style.overflow = '';
+      overlay.remove();
+      if (canvas && canvas._matrixInterval) {
+        clearInterval(canvas._matrixInterval);
+      }
+    };
+
+    // Move the game canvas into the popup
+    content.appendChild(closeBtn);
+    content.appendChild(gamePanel);
+
+    const canvas = document.createElement('canvas');
+    canvas.id = 'matrix-bg';
+    overlay.appendChild(canvas);
+
+    overlay.appendChild(content);
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+
+    function startMatrix(canvas) {
+      const ctx = canvas.getContext("2d");
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+      const columns = Math.floor(width / 20);
+      const chars = "$PINOCHAIN01NEO".split("");
+      const fontSize = 16;
+      const drops = Array(columns).fill(1);
+
+      function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+        ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = "#0F0";
+        ctx.font = fontSize + "px monospace";
+        for (let i = 0; i < drops.length; i++) {
+          const text = chars[Math.floor(Math.random() * chars.length)];
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+          if (drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+      }
+
+      const interval = setInterval(draw, 33);
+
+      // Store interval in canvas for later cleanup
+      canvas._matrixInterval = interval;
+
+      window.addEventListener("resize", () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+    }
+
+    startMatrix(canvas);
+
+    // Trigger resize to fix Phaser canvas
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 100);
+  });
+</script>
+</body>
+</html>
