@@ -405,3 +405,191 @@ section {
   border: 2px solid var(--primary);
   border-radius: 8px;
 }
+/* Futuristic degen cosmic theme */
+:root {
+  --background-dark: #0a0b17;
+  --card-bg: #171c2f;
+  --border-color: #334155;
+  --text-color: #e5e7eb;
+  --text-muted: #94a3b8;
+  --primary-gradient: linear-gradient(135deg, #7affd6, #347fc4);
+}
+
+/* Update global styles */
+body {
+  background: var(--background-dark);
+  color: var(--text-color);
+  font-family: 'Bangers', sans-serif;
+}
+
+/* Hero section styling */
+header.hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-image: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+header.hero h1 {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+}
+
+header.hero p {
+  font-family: monospace;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.connect-btn {
+  background-color: var(--primary);
+  color: var(--background-dark);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.connect-btn:hover {
+  background-color: var(--accent);
+}
+
+/* Cards container and cards */
+.cards-container {
+  display: grid;
+  gap: 2rem;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.card, 
+#swap, 
+#pfp, 
+#game, 
+.coming-soon {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  color: var(--text-color);
+  text-align: center;
+}
+
+.card h2, 
+#swap h2, 
+#pfp h2, 
+#game h2, 
+.coming-soon h2 {
+  font-family: 'Bangers', sans-serif;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.card p, 
+#swap p, 
+#pfp p, 
+#game p, 
+.coming-soon p {
+  font-family: monospace;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-btn,
+#swap button,
+#pfp button,
+#game button {
+  background-color: var(--secondary);
+  color: var(--background-dark);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.card-btn:hover,
+#swap button:hover,
+#pfp button:hover,
+#game button:hover {
+  background-color: var(--accent);
+}
+
+/* Fullscreen overlay for game */
+.fullscreen-overlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.fullscreen-content {
+  position: relative;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.fullscreen-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  color: var(--primary);
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* Override styles to fit existing HTML structure */
+main {
+  display: grid;
+  gap: 2rem;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+header {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-image: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+header h1 {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+}
+
+header .tagline {
+  font-family: monospace;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: var(--text-muted);
+}
+
+#ConnectWalletBtn {
+  background-color: var(--primary);
+  color: var(--background-dark);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#ConnectWalletBtn:hover {
+  background-color: var(--accent);
+}
