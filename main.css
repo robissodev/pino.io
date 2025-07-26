@@ -331,3 +331,77 @@ section:hover {
   height: auto;
   display: block;
 }
+
+/* New design improvements */
+:root {
+  --background: #0a0f14;
+  --primary: #6fce0a;
+  --secondary: #1e2c1c;
+  --accent: #81f442;
+  --text-color: #f4f4f4;
+  --card-bg: #112a17;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: 'Bangers', serif;
+  color: var(--primary);
+}
+
+header {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: var(--secondary);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+header .tagline {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--accent);
+}
+
+button {
+  background: var(--primary);
+  color: #0a0f14;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: var(--accent);
+}
+
+section {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem auto;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  color: var(--text-color);
+}
+
+.pfp-panel, .aurora-panel, #game {
+  background: var(--card-bg);
+  color: var(--text-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.coming-soon {
+  background: var(--secondary);
+  color: var(--text-color);
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+}
