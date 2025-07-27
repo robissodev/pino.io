@@ -3,146 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <title>Pino.io</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="/pfp/generator.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
     <h1>PINO.IO</h1>
-    <p class="tagline">Enter the Chain. Burn to Survive.</p>
-    <button id="ConnectWalletBtn">Connect Wallet</button>
-    <p id="WalletAddress"></p>
+    <p class="tagline">💊 Enter the Chain. Burn to Survive.</p>
+    <button id="connectWalletBtn">Connect Wallet</button>
+    <p id="walletAddress"></p>
   </header>
 
-  <main class="cards-container">
-    <section class="card">
-      <h2>Swap</h2>
-      <p>Buy $PINO on PinoSwap.</p>
-      <button onclick="window.open('https://jup.ag/swap/SOL-PINO', '_blank')">Buy Now</button>
+  <main>
+    <section id="swap">
+      <h2>💱 Buy $PINO on PINO.SWAP</h2>
+      <iframe src="https://jup.ag/swap/SOL-PINO" width="100%" height="500px" style="border: none;"></iframe>
     </section>
 
-    <section class="card">
-      <h2>PFP Generator</h2>
-      <p>Get your PFP here.</p>
-      <div id="pfp-panel">
-        <div class="container">
-          <div class="avatar-display" id="avatar-display">
-            <img id="avatar-image" src="/pfp-images/default_pino.png" alt="Avatar">
-          </div>
-          <div class="buttons-container" id="buttons-container">
-            <button id="generate-btn">PINOMIZE</button>
-            <button id="default-btn">RESET</button>
-            <button id="download-btn">DOWNLOAD</button>
-          </div>
+    <section id="pfp" class="pfp-panel">
+      <h2>GET YOUR PFP HERE!</h2>
+      <div class="container">
+       
+        
+        <div class="avatar-display" id="avatar-display">
+          <img id="avatar-image" src="/pfp-images/default_pino.png" alt="Avatar">
+        </div>
+        
+        <div class="buttons-container" id="buttons-container">
+          <button id="generate-btn">PINOMIZE</button>
+          <button id="default-btn">RESET</button>
+          <button id="download-btn">DOWNLOAD</button>
         </div>
       </div>
     </section>
 
-    <section class="card">
-      <h2>Enter the Arena</h2>
-      <p>Play the Pino Game.</p>
-      <button id="fullscreen-game" class="button">Fullscreen</button>
+    <section id="game">
+      <h2>🎮 Enter the Arena</h2>
+      <button id="fullscreen-game" class="button">🖥️ Fullscreen</button>
       <div id="phaser-game"></div>
     </section>
-    <section class="card">
-      <h2>Coming Soon</h2>
-      <p>Stay tuned for more.</p>
-    </section>
 
-    <section class="card">
-      <h2>Coming Soon</h2>
-      <p>Stay tuned for more.</p>
+    <section id="soon1" class="coming-soon">
+      <div class="blur-overlay"><h2>🔒 Coming Soon</h2></div>
     </section>
-
-    <section class="card">
-      <h2>Coming Soon</h2>
-      <p>Stay tuned for more.</p>
+    <section id="soon2" class="coming-soon">
+      <div class="blur-overlay"><h2>🔒 Coming Soon</h2></div>
     </section>
-
-    <section class="card">
-      <h2>Coming Soon</h2>
-      <p>Stay tuned for more.</p>
+    <section id="soon3" class="coming-soon">
+      <div class="blur-overlay"><h2>🔒 Coming Soon</h2></div>
+    </section>
+    <section id="soon4" class="coming-soon">
+      <div class="blur-overlay"><h2>🔒 Coming Soon</h2></div>
+    </section>
+    <section id="soon5" class="coming-soon">
+      <div class="blur-overlay"><h2>🔒 Coming Soon</h2></div>
     </section>
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-  <script src="/pfp/generator.js"></script>
-  <script src="/wallet.js"></script>
-  <script src="/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script type="module" src="/pfp/generator.js"></script>
+  <script type="module" src="/solana/wallet.js"></script>
+  <script type="module" src="/main.js"></script>
   <script>
-    const fullscreenBtn = document.getElementById('fullscreen-game');
-    const phaserContainer = document.getElementById('phaser-game');
+  const fullscreenBtn = document.getElementById('fullscreen-game');
+  const gamePanel = document.getElementById('phaser-game');
 
-    fullscreenBtn.addEventListener('click', () => {
-      const overlay = document.createElement('div');
-      overlay.style.position = 'fixed';
-      overlay.style.top = 0;
-      overlay.style.left = 0;
-      overlay.style.width = '100vw';
-      overlay.style.height = '100vh';
-      overlay.style.background = 'rgba(0, 0, 0, 0.9)';
-      overlay.style.zIndex = '9999';
+  fullscreenBtn.addEventListener('click', () => {
+    const overlay = document.createElement('div');
+    overlay.className = 'fullscreen-overlay';
 
-      const closeBtn = document.createElement('button');
-      closeBtn.innerText = 'X';
-      closeBtn.style.position = 'absolute';
-      closeBtn.style.top = '10px';
-      closeBtn.style.right = '10px';
-      closeBtn.addEventListener('click', () => {
-        if (canvas._matrixInterval) clearInterval(canvas._matrixInterval);
-        document.body.removeChild(overlay);
-        document.body.appendChild(phaserContainer);
-      });
-      overlay.appendChild(closeBtn);
+    const content = document.createElement('div');
+    content.className = 'fullscreen-content';
 
-      const gameWrapper = document.createElement('div');
-      gameWrapper.style.position = 'absolute';
-      gameWrapper.style.top = '50%';
-      gameWrapper.style.left = '50%';
-      gameWrapper.style.transform = 'translate(-50%, -50%)';
-      gameWrapper.appendChild(phaserContainer);
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '✖';
+    closeBtn.className = 'fullscreen-close';
+    closeBtn.onclick = () => {
+      document.body.style.overflow = '';
+      overlay.remove();
+      if (canvas && canvas._matrixInterval) {
+        clearInterval(canvas._matrixInterval);
+      }
+    };
 
-      overlay.appendChild(gameWrapper);
-      document.body.appendChild(overlay);
+    // Move the game canvas into the popup
+    content.appendChild(closeBtn);
+    content.appendChild(gamePanel);
 
-      const canvas = document.createElement('canvas');
-      canvas.style.position = 'absolute';
-      canvas.style.top = 0;
-      canvas.style.left = 0;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      overlay.appendChild(canvas);
-      const ctx = canvas.getContext('2d');
-      const chars = 'SPINOCHAINZ';
+    const canvas = document.createElement('canvas');
+    canvas.id = 'matrix-bg';
+    overlay.appendChild(canvas);
+
+    overlay.appendChild(content);
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+
+    function startMatrix(canvas) {
+      const ctx = canvas.getContext("2d");
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+      const columns = Math.floor(width / 20);
+      const chars = "$PINOCHAIN01NEO".split("");
       const fontSize = 16;
-      const columns = Math.floor(canvas.width / fontSize);
       const drops = Array(columns).fill(1);
 
-      function draw() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#0F0';
-        ctx.font = fontSize + 'px monospace';
+      functon draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+        ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = "#0F0";
+        ctx.font = fontSize + "px monospace";
         for (let i = 0; i < drops.length; i++) {
           const text = chars[Math.floor(Math.random() * chars.length)];
           ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-            drops[i] = 0;
-          }
+          if (drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
           drops[i]++;
         }
       }
-      const interval = setInterval(draw, 50);
+
+      const interval = setInterval(draw, 33);
+
+      // Store interval in canvas for later cleanup
       canvas._matrixInterval = interval;
-      window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+
+      window.addEventListener("resize", () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
       });
-    });
-  </script>
+    }
+
+    startMatrix(canvas);
+
+    // Trigger resize to fix Phaser canvas
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 100);
+  });
+</script>
 </body>
 </html>
