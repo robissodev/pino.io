@@ -618,7 +618,7 @@ header .tagline {
   backdrop-filter: blur(4px);
   color: #fff;
 }
-#password-content input {
+.password-content input {
   padding: 0.5rem;
   margin-top: 0.5rem;
   border-radius: 4px;
