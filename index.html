@@ -22,47 +22,77 @@
   </div>
 
   <script>
-  // Matrix-like phrases moving horizontally to the right
+  // Matrix vertical rain + occasional degen phrases fading in/out
   function startPasswordMatrix() {
     const canvas = document.getElementById('password-matrix');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    const characters = '01PINODEGENAPECHAINALPHA'.split('');
+    const fontSize = 18;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    // Phrases to randomly display
     const phrases = [
-      'BUY $PINO NOW', 
-      'DEGEN MODE ON', 
-      'ALPHA ALERT', 
+      'BUY $PINO NOW',
+      'APE STRONG TOGETHER',
       'ESCAPE THE MATRIX',
-      'APE STRONG TOGETHER', 
-      'PINO FOREVER', 
       'CHAIN UNLEASHED',
-      'MINT OR DIE',
       'ONLY DEGENS WIN',
-      'PINO ARMY RISING'
+      'PINO FOREVER'
     ];
 
-    const phraseObjects = phrases.map((text, i) => ({
-      text,
-      x: Math.random() * canvas.width,
-      y: i * (canvas.height / phrases.length),
-      speed: 1 + Math.random() * 1.5
-    }));
+    let phraseTimer = 0;
+    let currentPhrase = null;
+    let phraseOpacity = 0;
+    let fadingIn = true;
 
     function draw() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.font = 'bold 20px monospace';
       ctx.fillStyle = '#00ff81';
+      ctx.font = fontSize + 'px monospace';
 
-      for (let phrase of phraseObjects) {
-        ctx.fillText(phrase.text, phrase.x, phrase.y);
-        phrase.x += phrase.speed;
-        if (phrase.x > canvas.width + 100) {
-          phrase.x = -ctx.measureText(phrase.text).width;
-          phrase.y = Math.random() * canvas.height;
-          phrase.speed = 1 + Math.random() * 1.5;
+      // Draw matrix rain
+      for (let i = 0; i < drops.length; i++) {
+        const text = characters[Math.floor(Math.random() * characters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
         }
+
+        drops[i]++;
+      }
+
+      // Handle phrase display every ~4 seconds
+      phraseTimer++;
+      if (phraseTimer % 240 === 0 || (phraseTimer > 0 && !currentPhrase)) {
+        currentPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+        phraseOpacity = 0;
+        fadingIn = true;
+      }
+
+      if (currentPhrase) {
+        if (fadingIn) {
+          phraseOpacity += 0.02;
+          if (phraseOpacity >= 1) fadingIn = false;
+        } else {
+          phraseOpacity -= 0.005;
+          if (phraseOpacity <= 0) {
+            currentPhrase = null;
+          }
+        }
+
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, Math.min(1, phraseOpacity));
+        ctx.font = 'bold 28px Bangers, monospace';
+        ctx.fillStyle = '#00ffcc';
+        const textWidth = ctx.measureText(currentPhrase).width;
+        ctx.fillText(currentPhrase, (canvas.width - textWidth) / 2, canvas.height / 2);
+        ctx.restore();
       }
     }
 
