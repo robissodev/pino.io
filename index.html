@@ -8,6 +8,64 @@
   <link rel="stylesheet" href="/pfp/generator.css">
   <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 </head>
+
+
+  <!-- Password overlay -->
+<div id="password-overlay">
+  <canvas id="password-matrix"></canvas>
+  <div class="password-content">
+    <h2>Enter Password</h2>
+    <input id="password-input" type="password" placeholder="Senha" />
+    <button id="password-submit">Entrar</button>
+    <p id="password-error" style="color:#ff5555; display:none; margin-top:0.5rem;">Senha incorreta!</p>
+  </div>
+</div>
+
+<script>
+// Matrix effect with custom characters
+function startPasswordMatrix() {
+  const canvas = document.getElementById('password-matrix');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const chars = 'PINO DEGEN ALPHA EXCAPE APE'.split('');
+  const fontSize = 16;
+  const columns = canvas.width / fontSize;
+  const drops = [];
+  for (let i = 0; i < columns; i++) drops[i] = Math.random() * canvas.height;
+  function draw() {
+    ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#00ff81'; // neon green
+    ctx.font = fontSize + 'px monospace';
+    for (let i = 0; i < drops.length; i++) {
+      const text = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+  return setInterval(draw, 33);
+}
+document.addEventListener('DOMContentLoaded', () => {
+  // Start matrix background and handle password
+  const overlay = document.getElementById('password-overlay');
+  const errorMsg = document.getElementById('password-error');
+  const interval = startPasswordMatrix();
+  document.getElementById('password-submit').addEventListener('click', () => {
+    const pwd = document.getElementById('password-input').value.toLowerCase().trim();
+    if (pwd === 'pino') {
+      clearInterval(interval);
+      overlay.style.display = 'none';
+    } else {
+      errorMsg.style.display = 'block';
+    }
+  });
+});
+</script>
+
 <body>
   <header>
     <h1>PINO.IO</h1>
